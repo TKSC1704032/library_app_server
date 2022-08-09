@@ -1,14 +1,18 @@
 const { Student, validate } = require("../models/student");
 const Token = require("../models/token");
+const Book = require('../models/book')
 const sendEmail = require("../utils/email");
-
+const IssueRequest = require("../models/issueRequest")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const ReIssueRequest=require('../models/reIssueRequest')
+const moment = require('moment');
+
 require("dotenv").config();
 
 const getUser = async (req, res) => {
   try {
-    const user = await Student.findOne({$and: [{ _id:req.user._id}, { verified: true }]}).select('-password -verified -__v');
+    const user = await Student.findOne({$and: [{ _id:req.user._id}, { verified: true }]}).select('-password -verified -__v').populate('issuedBooks notification');
     if(user){
       res.status(200).json({
         status: "success",
@@ -295,11 +299,143 @@ const userPasswordReset = async (req, res) => {
   }
 }
 
+const issueBookRequest=async(req,res)=>{
+  let book = await Book.findOne({_id:req.body.bookID});
+  let user = await Student.findOne({$and: [{ _id:req.body.userID}, { verified: true }]}).select('-password -verified -__v');
+  let issueReqBook = await IssueRequest.find({userID:req.body.userID,bookID:req.body.bookID});
+   if(issueReqBook.length!=0){
+    console.log(issueReqBook);
+    return res.status(400).json({ "status": "failed", "message": "You already request for this book." });
+
+  }
+   issueReqBook = await IssueRequest.find({userID:req.body.userID});
+
+  if(!book){
+    return res.status(400).json({ "status": "failed", "message": "This Book is not found" });
+  }
+
+  
+  else if(issueReqBook.length>=3){
+    return res.status(400).json({ "status": "failed", "message": "You can't issue a book this time.You have reached the maximum number of issued books." });
+  }
+  else if(book.number_of_books=== 0){
+    return res.status(400).json({ "status": "failed", "message": "This book is not avaiable right now" });
+
+  }
+  else if(!user){
+    return res.status(400).json({ "status": "failed", "message": "User not found" });
+
+  }
+  else{
+    try{
+      let avaiableBooks= book.number_of_books_available-1;
+    let bookIds= book.book_id;
+    let bookId =bookIds.pop();
+    book = await Book.findByIdAndUpdate(req.body.bookID, { $set: { number_of_books_available: avaiableBooks, book_id:bookIds} })
+     issueReqBook = await new IssueRequest({userID:req.body.userID,bookID:req.body.bookID,bookName:book.name,bookAuthor:book.author,bookCoverId:book.cover_image_id,roll:user.roll,book_recognized_id:bookId}).save();
+     user = await Student.findByIdAndUpdate(
+      { _id: user._id },
+      { $push: { issuedBooks: issueReqBook._id  } },
+      { new: true }
+    )
+    return res.status(200).json({ "status": "Success", "message": "Successfully Send Issue Request" });
+
+  }
+    catch(error){
+      return res.status(400).json({ "status": "failed", "message": "Something went wrong in sending Issue request" });
+
+    }
+    
+  }
+
+}
 
 
+const reIssueBookRequest=async(req,res)=>{
+ 
+  let issueReqBook = await IssueRequest.findOne({_id:req.body.requestID,request_accepted:true});
+
+  if(!issueReqBook){
+    
+    return res.status(400).json({ "status": "failed", "message": "You have to first issue this book." });
+
+  }
+  let reIssueReqBook=await ReIssueRequest.findOne({issueID:issueReqBook._id,});
+  if(reIssueReqBook){
+    
+    return res.status(400).json({ "status": "failed", "message": "You already send a request." });
+
+  }
+
+    try{
+   
+      reIssueReqBook = await new ReIssueRequest({userID:issueReqBook.userID, issueID:issueReqBook._id, bookID:issueReqBook.bookID}).save();
+     
+    return res.status(200).json({ "status": "Success", "message": "Successfully Send Re-Issue Request" });
+
+  }
+    catch(error){
+      return res.status(400).json({ "status": "failed", "message": "Something went wrong in sending Re-Issue request" });
+
+    }
+    
+  
+
+}
+
+const findSemBooks=async(req,res)=>{
+  const {dept,sem}=req.params;
+  if(!dept||!sem){
+    return res.status(400).json({status:"failed",message:"filled your search field"})
+  }
+
+  try{
+    let books= await Book.find({tag_of_book:{ "$in" :[dept]}, semester:{ "$in" :[Number(sem)]}});
+   if(books.length>0){
+    return res.status(200).json({status:"success",message:"Books found",books})
+
+   }
+   else{
+    return res.status(400).json({status:"failed",message:"Books not found"})
+
+   }
+  }catch(e){
+   
+  return res.status(400).json({status:"success",message:"Books not found"});
+  }
+}
 
 
+const findBooks=async(req,res)=>{
+  if(req.body.searchTerm=='all'){
+    try{
+      let books= await Book.find().limit(20);
+    return res.status(200).json({status:"success",message:"Books found",books})
+    }catch(e){
+     
+    return res.status(400).json({status:"success",message:"Books not found"});
+    }
+    
+  }
+  if(req.body.searchTerm==''){
+    return res.status(400).json({status:"failed",message:"filled your search field"})
+  }
 
+  try{
+    let books= await Book.find({ name :new RegExp('^' +req.body.searchTerm, 'i') }).limit(20);
+   if(books.length>0){
+    return res.status(200).json({status:"success",message:"Books found",books})
+
+   }
+   else{
+    return res.status(400).json({status:"failed",message:"Books not found"})
+
+   }
+  }catch(e){
+   
+  return res.status(400).json({status:"success",message:"Books not found"});
+  }
+}
 
 module.exports = {
   getUser,
@@ -309,5 +445,9 @@ module.exports = {
   userLogout,
   changeUserPassword,
   sendUserPasswordResetEmail,
-  userPasswordReset
+  userPasswordReset,
+  issueBookRequest,
+  reIssueBookRequest,
+  findBooks,
+  findSemBooks
 };

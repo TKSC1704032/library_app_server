@@ -7,14 +7,19 @@ const userSchema = new Schema({
   fname: {
     type: String,
     required: true,
+    trim:true
+
   },
   lname: {
     type: String,
     required: true,
+    trim:true
+
   },
   roll: {
-    type: Number,
+    type: String,
     required: true,
+
   },
   series: {
     type: Number,
@@ -27,6 +32,8 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
+    trim:true
+
   },
   password: {
     type: String,
@@ -39,6 +46,22 @@ const userSchema = new Schema({
   cloudinary_id: {
     type: String,
     default:''
+  },
+  issuedBooks:[
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'IssueRequest',
+    }
+  ],
+  notification:[
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Notification',
+    }
+  ],
+  fine:{
+    type: Number,
+    default:0
   },
   verified: {
     type: Boolean,

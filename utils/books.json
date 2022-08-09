@@ -1,0 +1,48 @@
+[
+  {
+    "name": "Numerical Methods for Engineers",
+    "author": "Steven C. Chapra",
+    "edition": 7,
+    "total_book_id": ["num-01", "num-02", "num-03", "num-04", "num-05"],
+    "book_id": ["num-01", "num-02", "num-03", "num-04", "num-05"],
+    "number_of_books": 5,
+    "number_of_books_available": 5,
+    "tag_of_book": ["EEE", "CSE", "ETE", "MTE", "ECE"],
+    "semester": [4, 5],
+
+    "cover_image_id": "1x3R2_nNik9M7ADzUQTubssFb-MOjAH0l",
+
+    "pdf_id": "1a1gbrgGDQkhabXT5-Z2cNJyJBP4JQmLV"
+  },
+
+  {
+    "name": "Information Theory",
+    "author": "Thomas M. Cover",
+    "edition": 2,
+    "total_book_id": ["info-01", "info-02", "info-03", "info-04", "info-05"],
+    "book_id": ["info-01", "info-02", "info-03", "info-04", "info-05"],
+    "number_of_books": 5,
+    "number_of_books_available": 5,
+    "tag_of_book": ["EEE", "CSE", "ETE", "MTE", "ECE"],
+    "semester": [6],
+
+    "cover_image_id": "1igfbCBDE7l_NLANmxU3tp36N4StRnAVc",
+
+    "pdf_id": "1ASkkEKgfzNKuLppG0Q_y98Tn0xYyvgYK"
+  },
+  {
+    "name": "Elements of Electromagnetics",
+    "author": "Matthew N. O. Sadiku",
+    "edition": 7,
+    "total_book_id": ["emf-01", "emf-02", "emf-03", "emf-04", "emf-05"],
+    "book_id": ["emf-01", "emf-02", "emf-03", "emf-04", "emf-05"],
+    "number_of_books": 5,
+    "number_of_books_available": 5,
+    "tag_of_book": ["EEE", "CSE", "ETE", "MTE", "ECE"],
+    "semester": [6],
+
+    "cover_image_id": "1Vnz2nG747yQb_jK_Q0JZep7PRQPVbm9w",
+
+    "pdf_id": "1mIxRO56HyY5os4LfJ4EGVfY93beu4LNz"
+  }
+]

@@ -13,10 +13,9 @@ const storage=multer.diskStorage({
         cb(null,fileName+ext);
     }
 })
-
 // Multer config
 module.exports = multer({
-    storage: storage,
+  storage: storage,
   fileFilter: (req, file, cb) => {
      
     if (file.fieldname=='avatar'||file.fieldname=='book_cover'){

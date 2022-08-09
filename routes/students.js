@@ -1,7 +1,8 @@
+const fs =require('fs');
 const sendEmail = require("../utils/email");
 const Token = require("../models/token");
 const { Student, validate } = require("../models/student");
-const {getUser, Register ,VerifyRegister,userLogin,userLogout ,changeUserPassword,sendUserPasswordResetEmail, userPasswordReset}= require("../contolllers/studentAuth");
+const {getUser,findBooks, findSemBooks,Register ,VerifyRegister,userLogin,userLogout ,changeUserPassword,sendUserPasswordResetEmail, userPasswordReset,issueBookRequest,reIssueBookRequest}= require("../contolllers/studentAuth");
 const refreshToken =require('../contolllers/refreshtoken')
 const express = require("express");
 const router = express.Router();
@@ -9,12 +10,13 @@ const bcrypt = require('bcrypt');
 const checkUserAuth = require('../middleware/auth_middleware') ; 
 const cloudinary = require("../utils/cloudinary");
 const upload =  require("../utils/multer")
+const {bookPost} =require('../contolllers/adminController')
 
 // ROute Level Middleware - To Protect Route
 router.use('/getuser/',checkUserAuth);
 router.use('/changepassword/', checkUserAuth)
-router.use('/change-avatar/', checkUserAuth)
-router.use('/remove-avatar/:id/', checkUserAuth)
+// router.use('/change-avatar/', checkUserAuth)
+// router.use('/remove-avatar/:id/', checkUserAuth)
 
 //public routes
 router.post("/register/",Register);
@@ -24,12 +26,16 @@ router.post("/logout/",userLogout);
 router.post('/send-reset-password-email/', sendUserPasswordResetEmail);
 router.post('/reset-password/:id/:token/', userPasswordReset);
 router.post("/refresh-token/",refreshToken);
-
+router.post("/refresh-token/",refreshToken);
+router.post("/find-books/",findBooks);
+router.get("/find-sem-books/:dept/:sem/",findSemBooks);
 
 
 //private routes
 router.get('/getuser/',getUser);
 router.post('/changepassword/',changeUserPassword);
+router.post("/issue-book-request/",issueBookRequest);
+router.post("/re-issue-book-request/",reIssueBookRequest);
 router.post('/change-avatar/',upload.single('avatar'),async(req,res)=>{
     try {
         // Upload image to cloudinary
@@ -100,6 +106,8 @@ router.delete("/remove-avatar/:id/", async (req, res) => {
     });
   }
 });
+
+
 
 
 module.exports = router;

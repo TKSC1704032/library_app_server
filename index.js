@@ -12,7 +12,14 @@ const moment = require('moment');
 
 app.use(express.json());
 
-app.use(cors({ credentials:true,origin:'https://ruetonlinelibrary.netlify.app/'}));
+app.use(cors(
+    {
+        origin: ["https://ruetonlinelibrary.netlify.app"],
+        methods: ["GET", "POST", "DELETE"],
+        credentials: true,
+        origin: true,
+      }))
+    
 
 app.use(cookieParser());
 app.use("/api/student/", router);

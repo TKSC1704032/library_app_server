@@ -12,7 +12,8 @@ require("dotenv").config();
 
 const getUser = async (req, res) => {
   try {
-    const user = await Student.findOne({$and: [{ _id:req.user._id}, { verified: true }]}).select('-password -verified -__v').populate('issuedBooks notification');
+    const {userID}=req.params;
+    const user = await Student.findOne({$and: [{ _id:userID}, { verified: true }]}).select('-password -verified -__v').populate('issuedBooks notification');
     if(user){
       res.status(200).json({
         status: "success",
@@ -172,7 +173,7 @@ const VerifyRegister = async (req, res) => {
           secure: true
         });
        
-      res.status(201).json({ status: "success", message: "Registration Successful" ,AccessToken});
+      res.status(201).json({ status: "success", message: "Registration Successful" ,userID:user._id,AccessToken});
   
   } catch (error) {
     res.status(400).send(error, "An error occured");
@@ -190,7 +191,7 @@ const userLogin = async (req, res) => {
         if ((user.email === email) && isMatch) {
           // Generate JWT Token
           const RefreshToken = jwt.sign({ userID:user._id,email:user.email, role:"student" }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '1d' })
-          const AccessToken = jwt.sign({ userID: user._id ,email:user.email,  role:"student" }, process.env.JWT_ACCESS_SECRET_KEY, { expiresIn: '31s' })
+          const AccessToken = jwt.sign({ userID: user._id ,email:user.email,  role:"student" }, process.env.JWT_ACCESS_SECRET_KEY, { expiresIn: '1d' })
     
           res.cookie("userRefreshToken", RefreshToken, {
     
@@ -201,7 +202,7 @@ const userLogin = async (req, res) => {
               secure: true
             });
              
-          res.status(201).json({ status: "success", message: "Login Successful" ,AccessToken});
+          res.status(201).json({ status: "success", message: "Login Successful" ,userID:user._id,AccessToken});
 
         } else {
           res.send({ "status": "failed", "message": "Email or Password is not Valid" })
@@ -237,7 +238,9 @@ catch(error){
 
 const changeUserPassword = async (req, res) => {
   const {old_password, new_password, password_confirmation } = req.body
-  let user= await Student.findOne({_id:req.user._id})
+  const {userID}=req.params;
+
+  let user= await Student.findOne({_id:userID})
   const isMatch = await bcrypt.compare(old_password, user.password);
   if(!isMatch) return res.status(400).json({ "status": "failed", "message": "You entered wrong password" })
   if (new_password && password_confirmation) {

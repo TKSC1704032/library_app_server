@@ -13,8 +13,8 @@ const upload =  require("../utils/multer")
 const {bookPost} =require('../contolllers/adminController')
 
 // ROute Level Middleware - To Protect Route
-router.use('/getuser/',checkUserAuth);
-router.use('/changepassword/', checkUserAuth)
+// router.use('/getuser/',checkUserAuth);
+// router.use('/changepassword/', checkUserAuth)
 // router.use('/change-avatar/', checkUserAuth)
 // router.use('/remove-avatar/:id/', checkUserAuth)
 
@@ -32,8 +32,8 @@ router.get("/find-sem-books/:dept/:sem/",findSemBooks);
 
 
 //private routes
-router.get('/getuser/',getUser);
-router.post('/changepassword/',changeUserPassword);
+router.get('/getuser/:userID',getUser);
+router.post('/changepassword/:userID',changeUserPassword);
 router.post("/issue-book-request/",issueBookRequest);
 router.post("/re-issue-book-request/",reIssueBookRequest);
 router.post('/change-avatar/',upload.single('avatar'),async(req,res)=>{

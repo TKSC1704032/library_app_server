@@ -10,7 +10,7 @@ const jwt =require("jsonwebtoken");
       let user= await Student.findOne({_id:userID}).select('-password')      
       if(!user) return res.status(401).json({ "status": "failed", "message": "Wrong token" });
       const AccessToken = jwt.sign({userID: user._id ,email:user.email,  role:"student"},process.env.JWT_ACCESS_SECRET_KEY,{
-                expiresIn: '31s'
+                expiresIn: '1d'
             });
 
             

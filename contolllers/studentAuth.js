@@ -223,8 +223,9 @@ const userLogout = async (req, res) => {
   try{
   const refreshToken = req.cookies.userRefreshToken;
   if (!refreshToken) {return res.status(400).json({ "status": "failed", "message": "Unable to Logout" });}
-  else{res.clearCookie("userRefreshToken");
-      
+  else{
+    res.clearCookie("userRefreshToken");
+  // setcookie('userRefreshToken',"",0,"/",$domain);
   return res.status(200).json({ "status": "success", "message": "Successfully Logout" });
   }  
 }

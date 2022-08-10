@@ -169,7 +169,7 @@ const VerifyRegister = async (req, res) => {
           sameSite: 'none',
           maxAge: 24 * 60 * 60 * 1000,
           // signed: true,
-          // secure: true
+          secure: true
         });
        
       res.status(201).json({ status: "success", message: "Registration Successful" ,AccessToken});
@@ -198,7 +198,7 @@ const userLogin = async (req, res) => {
               sameSite: 'none',
               maxAge: 24 * 60 * 60 * 1000,
               // signed: true,
-              // secure: true
+              secure: true
             });
              
           res.status(201).json({ status: "success", message: "Login Successful" ,AccessToken});

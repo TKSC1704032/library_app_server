@@ -3,7 +3,7 @@ require("dotenv").config();
 const jwt =require("jsonwebtoken");
  const refreshToken = async(req, res) => {
     try {
-        const refreshToken = req.cookies.refreshToken;
+        const refreshToken = req.cookies.userRefreshToken;
         if(!refreshToken) return res.status(401).json({ "status": "failed", "message": "Unauthorized User, No Token" });
             // console.log(refreshToken);
       const {userID,email} =jwt.verify(refreshToken,process.env.JWT_REFRESH_SECRET_KEY);

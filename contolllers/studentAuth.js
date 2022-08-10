@@ -163,13 +163,13 @@ const VerifyRegister = async (req, res) => {
       const RefreshToken = jwt.sign({ userID: token[0].userId._id,email:token[0].userId.email, role:"student" }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '1d' })
       const AccessToken = jwt.sign({ userID: token[0].userId._id ,email:token[0].userId.email,  role:"student" }, process.env.JWT_ACCESS_SECRET_KEY, { expiresIn: '31s' })
 
-      res.cookie("refreshToken", RefreshToken, {
+      res.cookie("userRefreshToken", RefreshToken, {
 
           httpOnly: true,
           sameSite: 'none',
           maxAge: 24 * 60 * 60 * 1000,
           // signed: true,
-          secure: true
+          // secure: true
         });
        
       res.status(201).json({ status: "success", message: "Registration Successful" ,AccessToken});
@@ -192,13 +192,13 @@ const userLogin = async (req, res) => {
           const RefreshToken = jwt.sign({ userID:user._id,email:user.email, role:"student" }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '1d' })
           const AccessToken = jwt.sign({ userID: user._id ,email:user.email,  role:"student" }, process.env.JWT_ACCESS_SECRET_KEY, { expiresIn: '31s' })
     
-          res.cookie("refreshToken", RefreshToken, {
+          res.cookie("userRefreshToken", RefreshToken, {
     
               httpOnly: true,
               sameSite: 'none',
               maxAge: 24 * 60 * 60 * 1000,
               // signed: true,
-              secure: true
+              // secure: true
             });
              
           res.status(201).json({ status: "success", message: "Login Successful" ,AccessToken});
@@ -221,9 +221,9 @@ const userLogin = async (req, res) => {
 
 const userLogout = async (req, res) => {
   try{
-  const refreshToken = req.cookies.refreshToken;
+  const refreshToken = req.cookies.userRefreshToken;
   if (!refreshToken) {return res.status(400).json({ "status": "failed", "message": "Unable to Logout" });}
-  else{res.clearCookie("refreshToken");
+  else{res.clearCookie("userRefreshToken");
       
   return res.status(200).json({ "status": "success", "message": "Successfully Logout" });
   }  

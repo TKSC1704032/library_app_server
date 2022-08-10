@@ -1,48 +1,141 @@
-[
-  {
-    "name": "Numerical Methods for Engineers",
-    "author": "Steven C. Chapra",
-    "edition": 7,
-    "total_book_id": ["num-01", "num-02", "num-03", "num-04", "num-05"],
-    "book_id": ["num-01", "num-02", "num-03", "num-04", "num-05"],
-    "number_of_books": 5,
-    "number_of_books_available": 5,
-    "tag_of_book": ["EEE", "CSE", "ETE", "MTE", "ECE"],
-    "semester": [4, 5],
-
-    "cover_image_id": "1x3R2_nNik9M7ADzUQTubssFb-MOjAH0l",
-
-    "pdf_id": "1a1gbrgGDQkhabXT5-Z2cNJyJBP4JQmLV"
+[{
+  "_id": {
+    "$oid": "62ee57eb4d3ac70b6e630950"
   },
-
-  {
-    "name": "Information Theory",
-    "author": "Thomas M. Cover",
-    "edition": 2,
-    "total_book_id": ["info-01", "info-02", "info-03", "info-04", "info-05"],
-    "book_id": ["info-01", "info-02", "info-03", "info-04", "info-05"],
-    "number_of_books": 5,
-    "number_of_books_available": 5,
-    "tag_of_book": ["EEE", "CSE", "ETE", "MTE", "ECE"],
-    "semester": [6],
-
-    "cover_image_id": "1igfbCBDE7l_NLANmxU3tp36N4StRnAVc",
-
-    "pdf_id": "1ASkkEKgfzNKuLppG0Q_y98Tn0xYyvgYK"
+  "name": "Numerical Methods for Engineers",
+  "author": "Steven C. Chapra",
+  "edition": 7,
+  "total_book_id": [
+    "num-01",
+    "num-02",
+    "num-03",
+    "num-04",
+    "num-05"
+  ],
+  "book_id": [
+    "num-01",
+    "num-02",
+    "num-03",
+    "num-04",
+    "num-05"
+  ],
+  "number_of_books": 5,
+  "number_of_books_available": 5,
+  "tag_of_book": [
+    "EEE",
+    "CSE",
+    "ETE",
+    "MTE",
+    "ECE"
+  ],
+  "semester": [
+    4,
+    5
+  ],
+  "cover_image_id": "1x3R2_nNik9M7ADzUQTubssFb-MOjAH0l",
+  "pdf_id": "1a1gbrgGDQkhabXT5-Z2cNJyJBP4JQmLV"
+},{
+  "_id": {
+    "$oid": "62ee57eb4d3ac70b6e630951"
   },
-  {
-    "name": "Elements of Electromagnetics",
-    "author": "Matthew N. O. Sadiku",
-    "edition": 7,
-    "total_book_id": ["emf-01", "emf-02", "emf-03", "emf-04", "emf-05"],
-    "book_id": ["emf-01", "emf-02", "emf-03", "emf-04", "emf-05"],
-    "number_of_books": 5,
-    "number_of_books_available": 5,
-    "tag_of_book": ["EEE", "CSE", "ETE", "MTE", "ECE"],
-    "semester": [6],
-
-    "cover_image_id": "1Vnz2nG747yQb_jK_Q0JZep7PRQPVbm9w",
-
-    "pdf_id": "1mIxRO56HyY5os4LfJ4EGVfY93beu4LNz"
-  }
-]
+  "name": "Information Theory",
+  "author": "Thomas M. Cover",
+  "edition": 2,
+  "total_book_id": [
+    "info-01",
+    "info-02",
+    "info-03",
+    "info-04",
+    "info-05"
+  ],
+  "book_id": [
+    "info-01",
+    "info-02",
+    "info-03",
+    "info-04",
+    "info-05"
+  ],
+  "number_of_books": 5,
+  "number_of_books_available": 5,
+  "tag_of_book": [
+    "EEE",
+    "CSE",
+    "ETE",
+    "MTE",
+    "ECE"
+  ],
+  "semester": [
+    6
+  ],
+  "cover_image_id": "1igfbCBDE7l_NLANmxU3tp36N4StRnAVc",
+  "pdf_id": "1ASkkEKgfzNKuLppG0Q_y98Tn0xYyvgYK"
+},{
+  "_id": {
+    "$oid": "62ee57eb4d3ac70b6e630952"
+  },
+  "name": "Elements of Electromagnetics",
+  "author": "Matthew N. O. Sadiku",
+  "edition": 7,
+  "total_book_id": [
+    "emf-01",
+    "emf-02",
+    "emf-03",
+    "emf-04",
+    "emf-05"
+  ],
+  "book_id": [
+    "emf-01",
+    "emf-02",
+    "emf-03",
+    "emf-04",
+    "emf-05"
+  ],
+  "number_of_books": 5,
+  "number_of_books_available": 5,
+  "tag_of_book": [
+    "EEE",
+    "CSE",
+    "ETE",
+    "MTE",
+    "ECE"
+  ],
+  "semester": [
+    4
+  ],
+  "cover_image_id": "1Vnz2nG747yQb_jK_Q0JZep7PRQPVbm9w",
+  "pdf_id": "1mIxRO56HyY5os4LfJ4EGVfY93beu4LNz"
+},{
+  "_id": {
+    "$oid": "62f1a71e9f0e049400364409"
+  },
+  "name": "Antenna Theory Analysis and Design",
+  "author": "Balanis",
+  "edition": 3,
+  "total_book_id": [
+    "ant-01",
+    "ant-02",
+    "ant-03",
+    "ant-04",
+    "ant-05"
+  ],
+  "book_id": [
+    "ant-01",
+    "ant-02",
+    "ant-03",
+    "ant-04",
+    "ant-05"
+  ],
+  "number_of_books": 5,
+  "number_of_books_available": 5,
+  "tag_of_book": [
+    "ETE",
+    "EEE",
+    "ECE"
+  ],
+  "semester": [
+    6
+  ],
+  "cover_image_id": "1NQ9P8doNrz77gInLbgJ8WgxbPO8QxTm1",
+  "pdf_id": "1ZIeBmK5HEtVWA5pmTJJQsJ37rK-DUYmy",
+  "__v": 0
+}]

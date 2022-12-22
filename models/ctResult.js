@@ -44,10 +44,11 @@ const ctResult = new Schema({
     type: String,
     required: true,
   },
-  attendence:{
+  attendance:{
     type: String
     
   }
+
 },{ timestamps: true });
 
 const CtResult = mongoose.model("CtResult", ctResult);

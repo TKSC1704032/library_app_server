@@ -264,7 +264,7 @@ const sendUserPasswordResetEmail = async (req, res) => {
     if (user) {
       const secret = user._id + process.env.JWT_REFRESH_SECRET_KEY
       const token = jwt.sign({ userID: user._id }, secret, { expiresIn: '15m' })
-      const link = `https://ruetonlinelibrary.netlify.app/login/forget-password/password_reset/${user._id}/${token}`
+      const link = `https://onlineseba.onrender.com/login/forget-password/password_reset/${user._id}/${token}`
       // // Send Email
       const message = `<a href=${link}>Click Here</a> to Reset Your Password`;
         await sendEmail(user.email, "Password Reset Email", message);

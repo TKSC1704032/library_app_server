@@ -32,75 +32,75 @@ const path= `${__dirname}/excelFiles/` + req.file.filename;
 const {series,semester,dept}=req.body;
 console.log(series,semester,dept);
 console.log(req.file)
-// var workbook = XLSX.readFile(path);
-// var sheet_name_list = workbook.SheetNames;
+var workbook = XLSX.readFile(path);
+var sheet_name_list = workbook.SheetNames;
 
-// sheet_name_list.forEach( function (y) {
-//   var worksheet = workbook.Sheets[y];
-//   //getting the complete sheet
-//   // console.log(worksheet);
+sheet_name_list.forEach( function (y) {
+  var worksheet = workbook.Sheets[y];
+  //getting the complete sheet
+  // console.log(worksheet);
 
-//   var headers = {};
-//   var data = [];
-//   for (z in worksheet) {
-//     if (z[0] === "!") continue;
-//     //parse out the column, row, and value
-//     var col = z.substring(0, 1);
-//     // console.log(col);
+  var headers = {};
+  var data = [];
+  for (z in worksheet) {
+    if (z[0] === "!") continue;
+    //parse out the column, row, and value
+    var col = z.substring(0, 1);
+    // console.log(col);
 
-//     var row = parseInt(z.substring(1));
-//     // console.log(row);
+    var row = parseInt(z.substring(1));
+    // console.log(row);
 
-//     var value = worksheet[z].v;
-//     // console.log(value);
+    var value = worksheet[z].v;
+    // console.log(value);
 
-//     //store header names
-//     if (row == 1) {
-//       headers[col] = value;
-//       // storing the header names
-//       continue;
-//     }
+    //store header names
+    if (row == 1) {
+      headers[col] = value;
+      // storing the header names
+      continue;
+    }
 
-//     if (!data[row]) data[row] = {};
-//     data[row][headers[col]] = value;
-//   }
-//   //drop those first two rows which are empty
-//   data.shift();
-//   data.shift();
+    if (!data[row]) data[row] = {};
+    data[row][headers[col]] = value;
+  }
+  //drop those first two rows which are empty
+  data.shift();
+  data.shift();
 
-//   for (let i = 0; i < data.length; i++) {
-//     data[i].series=series;
-//     data[i].semester=semester;
-//     data[i].dept=dept;
+  for (let i = 0; i < data.length; i++) {
+    data[i].series=series;
+    data[i].semester=semester;
+    data[i].dept=dept;
 
-//   }
-// //   console.log(data);
-
-
-// SemResult.insertMany(data).then(function(docs){
+  }
+//   console.log(data);
 
 
-//     // console.log('All user documents are saved to the database', docs);
-//     fs.unlinkSync(path);
-//     res.status(200).json({
-//         status: "success",
-//         message: "uploaded successfully",
-//       });
+SemResult.insertMany(data).then(function(docs){
 
-// })
-// .catch(function(err){
+
+    // console.log('All user documents are saved to the database', docs);
+    fs.unlinkSync(path);
+    res.status(200).json({
+        status: "success",
+        message: "uploaded successfully",
+      });
+
+})
+.catch(function(err){
     
-//     console.error('Error Occurred: ', err.message);
-//     res.status(400).json({
-//         status: "Failed",
-//         message: "Can't upload",
-//       });
+    console.error('Error Occurred: ', err.message);
+    res.status(400).json({
+        status: "Failed",
+        message: "Can't upload",
+      });
     
-// });
+});
 
 
 
-// });
+});
 
 
 

@@ -64,7 +64,7 @@ router.post('/change-avatar/',upload.single('avatar'),async(req,res)=>{
             message: "Image uploaded successfully",
             userID:user._id,
             name:user.fname,
-            img_url:user.avatar,
+            img_url:user.avatar
           });
       } catch (err) {
         console.log(err);
